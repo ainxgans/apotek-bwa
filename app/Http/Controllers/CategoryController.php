@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -32,7 +33,7 @@ class CategoryController extends Controller
                 $iconPath = $request->file('icon')->store('category_icons', 'public');
                 $validated['icon'] = $iconPath;
             }
-            $validated['slug'] = \Str::slug($validated['name']);
+            $validated['slug'] = Str::slug($validated['name']);
             $newCategory = Category::create($validated);
 
             DB::commit();
@@ -40,12 +41,14 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([
-                'system_error' => ('Something went wrong' . $e->getMessage())
+                'system_error' => ('Something went wrong'.$e->getMessage())
             ]);
         }
     }
 
-    public function show($id) {}
+    public function show($id)
+    {
+    }
 
     public function edit(Category $category)
     {
@@ -72,7 +75,7 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([
-                'system_error' => ('Something went wrong' . $e->getMessage())
+                'system_error' => ('Something went wrong'.$e->getMessage())
             ]);
         }
     }
@@ -84,7 +87,7 @@ class CategoryController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             throw ValidationException::withMessages([
-                'system_error' => ('Something went wrong' . $e->getMessage())
+                'system_error' => ('Something went wrong'.$e->getMessage())
             ]);
         }
     }
