@@ -12,6 +12,9 @@ class CartController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        $my_carts = Auth::user()->carts()->with('product')->get();
+        return view('front.carts', compact('my_carts'));
     }
 
     public function create()
@@ -56,7 +59,15 @@ class CartController extends Controller
     {
     }
 
-    public function destroy($id)
+    public function destroy(Cart $cart)
     {
+        try {
+            $cart->delete();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages([
+                'system_error' => ('Something went wrong'.$e->getMessage())
+            ]);
+        }
     }
 }

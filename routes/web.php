@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/product_transactions', ProductTransactionController::class)->middleware('role:owner|buyer');
     Route::resource('/carts', CartController::class)->middleware('role:buyer');
+    Route::post('/carts/add/{productId}', [CartController::class, 'store'])->name('carts.store');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('products', ProductController::class)->middleware('role:owner');
