@@ -10,7 +10,7 @@
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white flex flex-col gap-y-5 overflow-hidden p-10 shadow-sm sm:rounded-lg">
-                <div class="item-card flex flex-row justify-between items-center">
+                <div class="item-card flex gap-y-3 flex-col md:flex-row justify-between md:items-center">
                     <div class="flex flex-row items-center gap-x-3">
                         <div>
                             <p class="text-base text-slate-500">
@@ -29,13 +29,13 @@
                         <p class="text-xl font-bold text-indigo-950">{{$productTransaction->created_at}}</p>
                     </div>
                     @if($productTransaction->is_paid)
-                        <span class="py-1 px-3 rounded-full bg-green-500">
+                        <span class="py-1 px-3 w-fit rounded-full bg-green-500">
                                 <p class="text-white font-bold text-sm">
                                     SUCCESS
                                 </p>
                         </span>
                     @else
-                        <span class="py-1 px-3 rounded-full bg-orange-500">
+                        <span class="py-1 px-3 w-fit rounded-full bg-orange-500">
                                 <p class="text-white font-bold text-sm">
                                     PENDING
                                 </p>
@@ -47,7 +47,7 @@
                     List of items
                 </h3>
 
-                <div class="grid-cols-4 grid gap-x-10">
+                <div class="grid-cols-1 md:grid-cols-4 grid gap-x-10">
                     <div class="flex flex-col gap-y-5 col-span-2">
                         {{--                        List item--}}
                         @forelse($productTransaction->transactionDetails as $detail)
