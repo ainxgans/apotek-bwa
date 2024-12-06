@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\ProductTransaction;
 use App\Models\TransactionDetail;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -72,7 +72,7 @@ class ProductTransactionController extends Controller
             }
             DB::commit();
             return redirect()->route('product_transactions.index');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw ValidationException::withMessages([
                 'system_error' => ['System Error', $e->getMessage()],
@@ -90,7 +90,7 @@ class ProductTransactionController extends Controller
     {
     }
 
-    public function update(Request $request, ProductTransaction $productTransaction)
+    public function update(ProductTransaction $productTransaction)
     {
         $productTransaction->update([
             'is_paid' => !$productTransaction->is_paid,

@@ -11,7 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-
+<body>
 <!-- Topbar -->
 <section class="relative flex items-center justify-between w-full gap-5 wrapper">
     <a href="#" class="p-2 bg-white rounded-full">
@@ -21,56 +21,56 @@
         Shopping Carts
     </p>
 </section>
+
+<!-- Items -->
+<section class="wrapper flex flex-col gap-2.5">
+    <div class="flex items-center justify-between">
+        <p class="text-base font-bold">
+            Items
+        </p>
+        <button type="button" class="p-2 bg-white rounded-full" data-expand="itemsList">
+            <img src="{{ asset('assets/svgs/ic-chevron.svg')}}"
+                 class="transition-all duration-300 -rotate-180 size-5"
+                 alt="">
+        </button>
+    </div>
+    <div class="flex flex-col gap-4" id="itemsList">
+        {{--        Product--}}
+        @forelse($my_carts as $cart )
+            <div class="py-3.5 pl-4 pr-[22px] bg-white rounded-2xl flex gap-1 items-center relative">
+                <img src="{{ Storage::url($cart->product->photo) }}"
+                     class="w-full max-w-[70px] max-h-[70px] object-contain"
+                     alt="">
+                <div class="flex flex-wrap items-center justify-between w-full gap-1">
+                    <div class="flex flex-col gap-1">
+                        <h3
+                                class="text-base font-semibold whitespace-nowrap w-[150px] truncate">
+                            {{$cart->product->name}}
+                        </h3>
+                        <p class="text-sm text-grey product-price" data-price="{{$cart->product->price}}">
+                            Rp {{$cart->product->price}}
+                        </p>
+                    </div>
+                    <form action="{{route('carts.destroy', $cart)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">
+                            <img src="{{ asset('assets/svgs/ic-trash-can-filled.svg')}}" class="size-[30px]" alt="">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @empty
+            <div class="flex items-center justify-center w-full h-[200px] bg-white rounded-3xl">
+                <p class="text-base font-semibold">
+                    No items in your cart
+                </p>
+            </div>
+        @endforelse
+    </div>
+</section>
 <form action="{{route('product_transactions.store')}}" method="post" enctype="multipart/form-data">
     @csrf
-    <!-- Items -->
-    <section class="wrapper flex flex-col gap-2.5">
-        <div class="flex items-center justify-between">
-            <p class="text-base font-bold">
-                Items
-            </p>
-            <button type="button" class="p-2 bg-white rounded-full" data-expand="itemsList">
-                <img src="{{ asset('assets/svgs/ic-chevron.svg')}}"
-                     class="transition-all duration-300 -rotate-180 size-5"
-                     alt="">
-            </button>
-        </div>
-        <div class="flex flex-col gap-4" id="itemsList">
-            {{--        Product--}}
-            @forelse($my_carts as $cart )
-                <div class="py-3.5 pl-4 pr-[22px] bg-white rounded-2xl flex gap-1 items-center relative">
-                    <img src="{{ Storage::url($cart->product->photo) }}"
-                         class="w-full max-w-[70px] max-h-[70px] object-contain"
-                         alt="">
-                    <div class="flex flex-wrap items-center justify-between w-full gap-1">
-                        <div class="flex flex-col gap-1">
-                            <h3
-                                    class="text-base font-semibold whitespace-nowrap w-[150px] truncate">
-                                {{$cart->product->name}}
-                            </h3>
-                            <p class="text-sm text-grey product-price" data-price="{{$cart->product->price}}">
-                                Rp {{$cart->product->price}}
-                            </p>
-                        </div>
-                        <form action="{{route('carts.destroy', $cart)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">
-                                <img src="{{ asset('assets/svgs/ic-trash-can-filled.svg')}}" class="size-[30px]" alt="">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            @empty
-                <div class="flex items-center justify-center w-full h-[200px] bg-white rounded-3xl">
-                    <p class="text-base font-semibold">
-                        No items in your cart
-                    </p>
-                </div>
-            @endforelse
-        </div>
-    </section>
-
     <!-- Details Payment -->
     <section class="wrapper flex flex-col gap-2.5">
         <div class="flex items-center justify-between">

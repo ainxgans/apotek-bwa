@@ -15,18 +15,21 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white flex flex-col gap-y-5 overflow-hidden p-10 shadow-sm sm:rounded-lg">
                 @forelse($product_transactions as $transaction)
+
                     <div class="item-card flex flex-row justify-between items-center">
-                        <div class="flex flex-row items-center gap-x-3">
-                            <div>
-                                <p class="text-base text-slate-500">
-                                    Total transaksi
-                                </p>
-                                <h3 class="text-2xl font-bold text-indigo-950">
-                                    RP 27189261
-                                </h3>
+                        <a href="{{route('product_transactions.show', $transaction)}}">
+                            <div class="flex flex-row items-center gap-x-3">
+                                <div>
+                                    <p class="text-base text-slate-500">
+                                        Total transaksi
+                                    </p>
+                                    <h3 class="text-2xl font-bold text-indigo-950">
+                                        RP 27189261
+                                    </h3>
+                                </div>
                             </div>
-                        </div>
-                        <div>
+                        </a>
+                        <div class="hidden md:flex flex-col">
                             <p class="text-base">
                                 Date
                             </p>
@@ -47,7 +50,7 @@
                                 </p>
                         </span>
                         @endif
-                        <div class="flex flex-row items-center gap-x-3">
+                        <div class="hidden md:flex flex-row items-center gap-x-3">
                             <a href="{{route('product_transactions.show', $transaction)}}"
                                class="font-bold py-3 px-5 rounded-full text-white bg-indigo-700">View
                                 Details</a>
